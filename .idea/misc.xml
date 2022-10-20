@@ -4,12 +4,13 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable/ic_agreement_users.xml" value="0.1325" />
+        <entry key="app/src/main/res/drawable/ic_back_to_main.xml" value="0.1325" />
         <entry key="app/src/main/res/drawable/ic_share.xml" value="0.1325" />
         <entry key="app/src/main/res/drawable/ic_switch.xml" value="0.1325" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.19610507246376813" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.23818817138671877" />
         <entry key="app/src/main/res/layout/activity_media_teka.xml" value="0.2798053527980535" />
         <entry key="app/src/main/res/layout/activity_search.xml" value="0.19610507246376813" />
-        <entry key="app/src/main/res/layout/activity_setting.xml" value="0.19610507246376813" />
+        <entry key="app/src/main/res/layout/activity_setting.xml" value="0.30317446943642423" />
       </map>
     </option>
   </component>

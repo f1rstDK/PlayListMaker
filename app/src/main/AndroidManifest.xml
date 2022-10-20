@@ -18,7 +18,7 @@
             android:exported="false">
         </activity>
         <activity
-            android:name=".activity_search"
+            android:name=".ActivitySearch"
             android:exported="false" />
         <activity
             android:name=".MediaTeka"

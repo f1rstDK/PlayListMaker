@@ -4,15 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/background_settings"
+    android:background="?attr/colorSecondary"
     >
 
     <ImageButton
+       android:fillColor="?attr/colorPrimaryVariant"
         android:id="@+id/back_to_main"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/ic_back_to_main"
-        android:backgroundTint="@color/background_settings"
+        android:backgroundTint="?attr/colorSecondary"
         android:paddingTop="22dp"
         android:layout_marginTop="20dp"
         tools:ignore="MissingConstraints" />
@@ -25,7 +26,7 @@
         android:paddingTop="14dp"
         android:paddingBottom="40dp"
         android:text="@string/settings"
-        android:textColor="@color/text_color"
+        android:textColor="?attr/colorOnSecondary"
         android:textSize="@dimen/text_size"
         android:textStyle="bold"
         tools:ignore="MissingConstraints" />
@@ -39,73 +40,38 @@
         tools:layout_editor_absoluteY="0dp">
 
         <Switch
+            android:fontFamily="@font/ys_display_medium"
+            style="@style/ButtonStyleSetting"
             android:id="@+id/switch_to_dark"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/setting_left_padding"
-            android:paddingTop="@dimen/bottom_and_top"
-            android:paddingBottom="@dimen/bottom_and_top"
-            android:text="@string/theme_switch"
-            android:textAllCaps="false"
-            android:textSize="@dimen/size_setting"
-            />
+            android:text="@string/theme_switch" />
 
         <Button
+            style="@style/ButtonStyleSetting"
             android:id="@+id/share_app"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/background_settings"
-            android:gravity="start"
-            android:paddingLeft="@dimen/setting_left_padding"
-            android:paddingTop="@dimen/bottom_and_top"
-            android:paddingBottom="@dimen/bottom_and_top"
-            android:stateListAnimator="@null"
             android:text="@string/share_app"
-            android:textAllCaps="false"
-            android:textColor="@color/text_color"
-            android:textSize="@dimen/size_setting"
-            app:icon="@drawable/ic_share"
-            app:iconGravity="end"
-            app:iconTint="@color/setting_icons"
-            app:rippleColor="@color/background_settings" />
+            app:icon="@drawable/ic_share" />
 
         <Button
+            style="@style/ButtonStyleSetting"
             android:id="@+id/chat_to_support"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/background_settings"
-            android:gravity="start"
-            android:paddingLeft="@dimen/setting_left_padding"
-            android:paddingTop="@dimen/bottom_and_top"
-            android:paddingBottom="@dimen/bottom_and_top"
-            android:stateListAnimator="@null"
             android:text="@string/support"
-            android:textAllCaps="false"
-            android:textColor="@color/text_color"
-            android:textSize="@dimen/size_setting"
-            app:icon="@drawable/ic_support"
-            app:iconGravity="end"
-            app:iconTint="@color/setting_icons"
-            app:rippleColor="@color/background_settings" />
+            app:icon="@drawable/ic_support" />
 
         <Button
+            style="@style/ButtonStyleSetting"
+            android:foreground="?attr/selectableItemBackground"
             android:id="@+id/agreement_users"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/background_settings"
-            android:gravity="start"
-            android:paddingLeft="@dimen/setting_left_padding"
-            android:paddingTop="@dimen/bottom_and_top"
-            android:paddingBottom="@dimen/bottom_and_top"
-            android:stateListAnimator="@null"
             android:text="@string/agreement_users"
-            android:textAllCaps="false"
-            android:textColor="@color/text_color"
-            android:textSize="@dimen/size_setting"
             app:icon="@drawable/ic_agreement_users"
-            app:iconGravity="end"
-            app:iconTint="@color/setting_icons"
-            app:rippleColor="@color/background_settings" />
+            />
 
     </LinearLayout>
 
