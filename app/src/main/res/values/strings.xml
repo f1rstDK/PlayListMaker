@@ -11,4 +11,20 @@
     <string name="agreement_users">Пользовательское соглашение</string>
 
     <string name="support">Написать в поддержку</string>
+    <string name="chat_to_support_theme">Сообщение разработчикам и разработчицам приложения Playlist Maker</string>
+    <string name="chat_to_support_message">Спасибо разработчикам и разработчицам за крутое приложение!</string>
+    <string name="email_Denis">stores.steamcommunity@Mail.ru</string>
+    <string name="clear_input_text">Очистить</string>
+    <string name="email">Email:</string>
+    <string name="Theme">Theme:</string>
+    <string name="Description">Description:</string>
+    <string name="Submit">Submit</string>
+    <string name="Choose">Выбор приложения для отправки</string>
+
+    <string-array name="list_of_social_networks">
+        <item>Telegram</item>
+        <item>WhatsApp</item>
+        <item>VK</item>
+        <item>Instagram</item>
+    </string-array>
 </resources>

@@ -7,10 +7,12 @@
         <entry key="app/src/main/res/drawable/ic_back_to_main.xml" value="0.1325" />
         <entry key="app/src/main/res/drawable/ic_share.xml" value="0.1325" />
         <entry key="app/src/main/res/drawable/ic_switch.xml" value="0.1325" />
+        <entry key="app/src/main/res/layout/activity_dialog_acitivity.xml" value="0.23541666666666666" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.23818817138671877" />
         <entry key="app/src/main/res/layout/activity_media_teka.xml" value="0.2798053527980535" />
-        <entry key="app/src/main/res/layout/activity_search.xml" value="0.19610507246376813" />
+        <entry key="app/src/main/res/layout/activity_search.xml" value="0.10849056603773585" />
         <entry key="app/src/main/res/layout/activity_setting.xml" value="0.30317446943642423" />
+        <entry key="app/src/main/res/layout/activity_share.xml" value="0.23541666666666666" />
       </map>
     </option>
   </component>

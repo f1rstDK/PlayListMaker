@@ -15,11 +15,11 @@ class MainActivity : AppCompatActivity() {
         settings_button.setOnClickListener {
             val setting_intent = Intent(this,SettingsActivity::class.java)
             startActivity(setting_intent)
-        } //
+        }
         val activity_search = findViewById<Button>(R.id.search)
 
         activity_search.setOnClickListener {
-            val search_intent = Intent(this, com.example.playlistmakers_doing.ActivitySearch::class.java)
+            val search_intent = Intent(this, ActivitySearch::class.java)
             startActivity(search_intent)
         }
 
