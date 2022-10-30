@@ -29,9 +29,6 @@
         <Button
             style="@style/ButtonStyleMain"
             android:id="@+id/search"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
             android:text="@string/search"
             app:icon="@drawable/ic_search"
             app:iconTint="@color/black" />
@@ -39,19 +36,13 @@
         <Button
             style="@style/ButtonStyleMain"
             android:id="@+id/mediaLibrary"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
             android:text="@string/media_library"
             app:icon="@drawable/ic_medialibrary" />
 
         <Button
             style="@style/ButtonStyleMain"
             android:id="@+id/setting"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
             android:text="@string/settings"
-            app:icon="@drawable/ic_settings" />
+            app:icon="@drawable/ic_settings"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

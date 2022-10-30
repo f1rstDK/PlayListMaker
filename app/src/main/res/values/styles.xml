@@ -17,6 +17,9 @@
         <item name="elevation">6dp</item>
         <item name="android:stateListAnimator">@null</item>
         <item name="android:translationZ">4dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_weight">1</item>
 
     </style>
 
@@ -24,7 +27,11 @@
         <item name="iconTint">?attr/colorSecondaryVariant</item>
     </style>
 
-    <style name="ButtonStyleSetting">
+    <style name="ButtonStyleSetting" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+        <item name="android:textAllCaps">false</item>
+        <item name="android:foreground">?attr/selectableItemBackground</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
         <item name="rippleColor">?attr/colorSecondary</item>
         <item name="iconTint">?attr/colorPrimaryVariant</item>
         <item name="iconGravity">end</item>

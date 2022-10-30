@@ -1,12 +1,15 @@
 package com.example.playlistmakers_doing
 
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.view.WindowManager
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 
@@ -33,7 +36,6 @@ class ActivitySearch : AppCompatActivity() {
             }
 
             override fun afterTextChanged(p0: Editable?) {
-
             }
         })
         buttonEditText.setOnClickListener {
@@ -42,11 +44,21 @@ class ActivitySearch : AppCompatActivity() {
     }
     private fun clearButtonVisibility(s: CharSequence?): Int {
         return if (s.isNullOrEmpty()) {
+            closeKeybord() // применение функции
             View.GONE
         } else {
             View.VISIBLE
         }
     }
+
+    fun closeKeybord() {
+        val view = this.currentFocus
+        if(view != null) {
+            val hideMe = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            hideMe.hideSoftInputFromWindow(view.windowToken, 0)
+        }
+    } // решает баг с закрытием клавиатуры при завершении ввода
+
     companion object{
         const val SEARCH = "SEARCH_INPUT"
     }

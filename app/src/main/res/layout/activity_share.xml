@@ -23,7 +23,7 @@
 
     <EditText
         android:id="@+id/email_chat_support"
-        android:hint="@string/email_Denis"
+        android:hint="@string/stores_steamcommunity_Mail_ru"
         style="@style/ChatSupport_EditText" />
 
     </LinearLayout>
@@ -69,9 +69,8 @@
     </LinearLayout>
 
     <Button
+        android:gravity="center"
         android:id="@+id/buttonEditText"
-        style="@style/ButtonStyleMain"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/ButtonStyleSetting"
         android:text="@string/Submit"></Button>
 </LinearLayout>

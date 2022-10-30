@@ -16,8 +16,13 @@ class SettingsActivity : AppCompatActivity() {
         val settingButton_shareApp = findViewById<Button>(R.id.share_app)
 
         settingButton_shareApp.setOnClickListener {
-            val sendIntent = Intent(this, DialogAcitivity::class.java)
-            startActivity(sendIntent)
+            val mIntent = Intent(Intent.ACTION_SEND).apply {
+                type = "*/*"
+                putExtra(Intent.EXTRA_TEXT, getString(R.string.link_practicum_developer))
+            }
+            if(intent.resolveActivity(packageManager)!= null) {
+                startActivity(mIntent)
+            }
         }
 
         settingButton_chatSuppoort.setOnClickListener {
@@ -27,7 +32,7 @@ class SettingsActivity : AppCompatActivity() {
 
         settingButton_agreement.setOnClickListener {
             val browseAgreement_intent = Intent(Intent.ACTION_VIEW,
-            Uri.parse("https://yandex.ru/legal/practicum_offer/)"))
+            Uri.parse(getString(R.string.oferta)))
             startActivity(browseAgreement_intent)
         }
 
