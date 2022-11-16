@@ -6,13 +6,43 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="?attr/colorOnPrimary">
 
+        <TextView
+            android:layout_width="166dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_left_title"
+            android:layout_marginTop="14dp"
+            android:layout_marginRight="210dp"
+            android:layout_marginBottom="40dp"
+            android:text="@string/app_name"
+            android:textColor="@color/white"
+            android:fontFamily="@font/ys_display_medium"
+            android:textSize="@dimen/text_size">
+
+        </TextView>
+
+        <Button
+            style="@style/ButtonStyleMain"
+            android:id="@+id/search"
+            android:text="@string/search"
+            app:icon="@drawable/ic_search"
+            app:iconTint="@color/black" />
+
+        <Button
+            style="@style/ButtonStyleMain"
+            android:id="@+id/mediaLibrary"
+            android:text="@string/media_library"
+            app:icon="@drawable/ic_medialibrary" />
+
+        <Button
+            style="@style/ButtonStyleMain"
+            android:id="@+id/setting"
+            android:text="@string/settings"
+            app:icon="@drawable/ic_settings"/>
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
