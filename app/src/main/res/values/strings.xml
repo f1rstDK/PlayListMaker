@@ -22,11 +22,5 @@
     <string name="Submit">Submit</string>
     <string name="Choose">Выбор приложения для отправки</string>
     <string name="oferta">https://yandex.ru/legal/practicum_offer/</string>
-
-    <string-array name="list_of_social_networks">
-        <item>Telegram</item>
-        <item>WhatsApp</item>
-        <item>VK</item>
-        <item>Instagram</item>
-    </string-array>
+    <string name="for_tracks">%s • %s</string>
 </resources>
