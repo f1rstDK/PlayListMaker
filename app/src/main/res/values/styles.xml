@@ -70,7 +70,7 @@
         <item name="android:background">@drawable/custom_input</item>
         <item name="android:drawableStart">@drawable/ic_search_search</item>
         <item name="android:drawablePadding">5.13dp</item>
-        <item name="android:textColor">?attr/colorOnSecondary</item>
+        <item name="android:textColor">?attr/colorPrimary</item>
         <item name="android:maxLength">365</item>
         <item name="android:maxLines">3</item>
         <item name="android:textSize">@dimen/size_setting</item>

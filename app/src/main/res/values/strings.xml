@@ -23,4 +23,7 @@
     <string name="Choose">Выбор приложения для отправки</string>
     <string name="oferta">https://yandex.ru/legal/practicum_offer/</string>
     <string name="for_tracks">%s • %s</string>
+    <string name="button_update">Обновить</string>
+    <string name="troubles_with_network">Проблемы со связью\n\nЗагрузка не удалась. Проверьте подключение к интернету</string>
+    <string name="no_find">Ничего не нашлось</string>
 </resources>

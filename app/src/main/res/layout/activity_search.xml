@@ -25,24 +25,103 @@
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
+        android:id="@+id/til_search"
         android:orientation="horizontal"
         android:layout_height="wrap_content">
-
-        <EditText
-            android:id="@+id/search_input_text"
-            android:hint="@string/search"
-            style="@style/Edit_Layout_Search" />
         <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        <ImageView
-            android:id="@+id/clearIcon"
-            android:src="@drawable/ic_clear_icon"
-            style="@style/ClearButton" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/search_input_text"
+                style="@style/Edit_Layout_Search"
+                android:layout_width="369dp"
+                android:imeOptions="actionDone"
+                android:singleLine="true"
+                android:hint="@string/search" />
+
+            <ImageView
+                android:id="@+id/clearIcon"
+                android:visibility="gone"
+                style="@style/ClearButton"
+                android:layout_width="wrap_content"
+                android:layout_height="26dp"
+                android:src="@drawable/ic_clear_icon" />
+
         </FrameLayout>
+
     </LinearLayout>
+        <LinearLayout
+            android:id="@+id/networkTrouble"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="top"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="100dp"
+                android:src="@drawable/ic_internet_problem" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginVertical="20dp"
+                android:text_size="text_size"
+                android:gravity="center"
+                android:text="@string/troubles_with_network"
+                android:textAlignment="center"
+                android:textColor="@color/text_color" />
+
+            <Button
+                android:id="@+id/btn_update"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="4dp"
+                android:backgroundTint="@color/text_color"
+                android:text="@string/button_update"
+                android:textColor="@color/white"
+                app:cornerRadius="54dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/nothing_found"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="top"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="100dp"
+                android:src="@drawable/no_find" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="24dp"
+                android:gravity="center"
+                android:text="@string/no_find"
+                android:textColor="@color/text_color"
+                android:textSize="19sp" />
+
+        </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/RecyclerForTracks"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
