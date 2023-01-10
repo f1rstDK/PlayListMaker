@@ -22,11 +22,8 @@
     <string name="Submit">Submit</string>
     <string name="Choose">Выбор приложения для отправки</string>
     <string name="oferta">https://yandex.ru/legal/practicum_offer/</string>
-
-    <string-array name="list_of_social_networks">
-        <item>Telegram</item>
-        <item>WhatsApp</item>
-        <item>VK</item>
-        <item>Instagram</item>
-    </string-array>
+    <string name="for_tracks">%s • %s</string>
+    <string name="button_update">Обновить</string>
+    <string name="troubles_with_network">Проблемы со связью\n\nЗагрузка не удалась. Проверьте подключение к интернету</string>
+    <string name="no_find">Ничего не нашлось</string>
 </resources>

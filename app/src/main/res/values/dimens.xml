@@ -13,4 +13,8 @@
     <dimen name="bottom_and_top">21dp</dimen>
 
     <dimen name="size_setting">16sp</dimen>
+    <dimen name="paddingEnd">12dp</dimen>
+    <dimen name="padding_for_edit_layout">11px</dimen>
+
+    <dimen name="layout_height">36dp</dimen>
 </resources>
