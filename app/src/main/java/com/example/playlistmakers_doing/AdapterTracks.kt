@@ -23,8 +23,8 @@ class AdapterTracks : RecyclerView.Adapter<AdapterTracks.ListViewHolder>() {
     }
 
 
-    inner class ListViewHolder(private val view: View): RecyclerView.ViewHolder(view) {
-        private val photoTrack: ImageView = view.findViewById(R.id.photo_track)
+    class ListViewHolder(private val view: View): RecyclerView.ViewHolder(view) {
+        private val artworkUrl100: ImageView = view.findViewById(R.id.photo_track)
         private val trackArtistTime: TextView = view.findViewById(R.id.track_artist_time)
         private val trackName: TextView = view.findViewById(R.id.track_name)
 
@@ -34,10 +34,13 @@ class AdapterTracks : RecyclerView.Adapter<AdapterTracks.ListViewHolder>() {
                 .load(track.artworkUrl100)
                 .fitCenter()
                 .transform(RoundedCorners(2))
-                .placeholder(R.drawable.placeholder_for_albums).into(photoTrack)
+                .placeholder(R.drawable.placeholder_for_albums)
+                .dontAnimate()
+                .into(artworkUrl100)
             val example = view.context.getString(R.string.for_tracks)
             trackArtistTime.text = String.format(example, convertTime(track.trackTime ?: ""), track.artistName)
         }
+        private fun convertTime(trackTime: String): String = SimpleDateFormat("mm:ss", Locale.getDefault()).format(trackTime.toLong())
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
@@ -52,7 +55,4 @@ class AdapterTracks : RecyclerView.Adapter<AdapterTracks.ListViewHolder>() {
     override fun getItemCount(): Int {
         return tracks.size
     }
-
-    private fun convertTime(trackTime: String): String = SimpleDateFormat("mm:ss", Locale.getDefault()).format(293000L)
-
 }

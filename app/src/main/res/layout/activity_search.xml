@@ -73,7 +73,6 @@
                 android:layout_gravity="center"
                 android:layout_marginHorizontal="24dp"
                 android:layout_marginVertical="20dp"
-                android:text_size="text_size"
                 android:gravity="center"
                 android:text="@string/troubles_with_network"
                 android:textAlignment="center"

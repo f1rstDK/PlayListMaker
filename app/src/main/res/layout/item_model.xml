@@ -12,8 +12,8 @@
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:layout_margin="8dp"
-        android:contentDescription="Изображение альбома"
-        tools:src="@drawable/placeholder_for_albums" />
+        android:src="@drawable/placeholder_for_albums"
+        android:contentDescription="Изображение альбома" />
 
     <LinearLayout
         android:layout_width="0dp"

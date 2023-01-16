@@ -120,9 +120,6 @@ class ActivitySearch : AppCompatActivity() {
             getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
         inputMethodManager?.hideSoftInputFromWindow(view.windowToken, 0)
     }
-    companion object {
-        private const val EDIT_TEXT_KEY = "EDIT_TEXT_KEY"
-    }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
@@ -155,5 +152,9 @@ class ActivitySearch : AppCompatActivity() {
         recyclerView.visibility = View.GONE
         networkError.visibility = View.GONE
         nothingFound.visibility = View.GONE
+    }
+
+    companion object {
+        private const val EDIT_TEXT_KEY = "EDIT_TEXT_KEY"
     }
 }

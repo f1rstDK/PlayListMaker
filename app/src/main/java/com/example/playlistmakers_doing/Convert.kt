@@ -5,6 +5,6 @@ class Convert {
         trackName = con?.trackName.toString(),
         artistName = con?.artistName.toString(),
         trackTime = con?.trackTimeMillis.toString(),
-        artworkUrl100 = con?.artWorkUrl100.toString()
+        artworkUrl100 = con?.artworkUrl100.toString()
     )
 }

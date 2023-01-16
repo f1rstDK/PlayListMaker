@@ -38,13 +38,11 @@
         android:paddingTop="80dp"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp">
-
         <Switch
             android:fontFamily="@font/ys_display_medium"
             style="@style/ButtonStyleSetting"
             android:id="@+id/switch_to_dark"
-            android:text="@string/theme_switch" />
-
+            android:text="@string/theme_switch"/>
         <Button
             style="@style/ButtonStyleSetting"
             android:id="@+id/share_app"
