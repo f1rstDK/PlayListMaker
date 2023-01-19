@@ -5,6 +5,8 @@ import android.net.Uri
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import com.example.playlistmakers_doing.Constants.THEME_SWITCHER_KEY
+import com.example.playlistmakers_doing.Constants.THEME_SWITCHER_PREFERENCES
 import com.google.android.material.switchmaterial.SwitchMaterial
 
 class SettingsActivity : AppCompatActivity() {
@@ -15,11 +17,20 @@ class SettingsActivity : AppCompatActivity() {
         val settingButton_agreement = findViewById<Button>(R.id.agreement_users)
         val settingButton_chatSuppoort = findViewById<Button>(R.id.chat_to_support)
         val settingButton_shareApp = findViewById<Button>(R.id.share_app)
-       // val themeSwitcher = findViewById<SwitchMaterial>(R.id.themeSwitcher)
+        val themeSwitcher = findViewById<SwitchMaterial>(R.id.themeSwitcher)
 
-        //themeSwitcher.setOnCheckedChangeListener { switcher, checked ->
+        val sharedPrefs = getSharedPreferences(THEME_SWITCHER_PREFERENCES, MODE_PRIVATE)
 
-        //}
+        val darkMode = sharedPrefs.getBoolean(THEME_SWITCHER_KEY, false)
+
+        themeSwitcher.isChecked = darkMode
+
+        themeSwitcher.setOnCheckedChangeListener { switcher, checked ->
+            (applicationContext as App).switchTheme(checked)
+            sharedPrefs.edit()
+                .putBoolean(THEME_SWITCHER_KEY, checked)
+                .apply()
+        }
 
         settingButton_shareApp.setOnClickListener {
             val mIntent = Intent(Intent.ACTION_SEND).apply {

@@ -15,11 +15,33 @@ import java.util.*
 class AdapterTracks : RecyclerView.Adapter<AdapterTracks.ListViewHolder>() {
 
     private var tracks = listOf<Track>()
+    private var trackListener:  ((Track) -> Unit)? = null
 
     @SuppressLint("NotifyDataSetChanged")
     fun setTrackList(tracks: List<Track>) {
         this.tracks = tracks
         notifyDataSetChanged()
+    }
+
+    fun setTrackListListener (callback: ((Track) -> Unit)?) {
+        trackListener = callback
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
+        val view =  LayoutInflater.from(parent.context).inflate(R.layout.item_model, parent, false)
+        return ListViewHolder(view)
+    }
+
+    override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
+        holder.bind(tracks[position])
+        holder.itemView.setOnClickListener {
+            val track = tracks[position]
+            trackListener?.invoke(track)
+        }
+    }
+
+    override fun getItemCount(): Int {
+        return tracks.size
     }
 
 
@@ -43,16 +65,4 @@ class AdapterTracks : RecyclerView.Adapter<AdapterTracks.ListViewHolder>() {
         private fun convertTime(trackTime: String): String = SimpleDateFormat("mm:ss", Locale.getDefault()).format(trackTime.toLong())
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
-        val view =  LayoutInflater.from(parent.context).inflate(R.layout.item_model, parent, false)
-        return ListViewHolder(view)
-    }
-
-    override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
-        holder.bind(tracks[position])
-    }
-
-    override fun getItemCount(): Int {
-        return tracks.size
-    }
 }

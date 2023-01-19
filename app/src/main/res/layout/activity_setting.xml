@@ -38,10 +38,10 @@
         android:paddingTop="80dp"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp">
-        <Switch
+        <com.google.android.material.switchmaterial.SwitchMaterial
             android:fontFamily="@font/ys_display_medium"
             style="@style/ButtonStyleSetting"
-            android:id="@+id/switch_to_dark"
+            android:id="@+id/themeSwitcher"
             android:text="@string/theme_switch"/>
         <Button
             style="@style/ButtonStyleSetting"
