@@ -55,7 +55,7 @@ class ActivitySearch : AppCompatActivity() {
             setScreenState(SearchScreenState.History(emptyList))
         }
 
-        //
+        ///
         val clearButton = findViewById<ImageView>(R.id.clearIcon)
         inputText.setOnEditorActionListener{_, actionId, _ ->
             setAllInvisible()
