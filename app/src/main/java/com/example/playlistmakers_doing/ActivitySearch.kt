@@ -2,6 +2,7 @@ package com.example.playlistmakers_doing
 
 
 import android.content.Context
+import android.content.Intent
 import retrofit2.Callback
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -41,6 +42,13 @@ class ActivitySearch : AppCompatActivity() {
         setListener()
         setAdapter()
 
+        val buttonBackToMain = findViewById<ImageView>(R.id.back_to_main)
+
+        buttonBackToMain.setOnClickListener {
+            val mainIntent = Intent(this, MainActivity::class.java)
+            startActivity(mainIntent)
+        }
+
         btnClearHistory.setOnClickListener {
             sharedStore.clearList()
             val emptyList = mutableListOf<Track>()
@@ -48,8 +56,6 @@ class ActivitySearch : AppCompatActivity() {
         }
 
         val clearButton = findViewById<ImageView>(R.id.clearIcon)
-        //inputText.requestFocus()
-        //hideKeyboard(inputText)
         inputText.setOnEditorActionListener{_, actionId, _ ->
             setAllInvisible()
             if (actionId == EditorInfo.IME_ACTION_DONE && inputText.text.isNotEmpty()) {
@@ -85,6 +91,7 @@ class ActivitySearch : AppCompatActivity() {
             inputText.text.clear()
             hideKeyboard(inputText)
             setAllInvisible()
+            linerHistory.visibility = View.VISIBLE
             clearButton.visibility = View.GONE
         }
     }
@@ -98,7 +105,7 @@ class ActivitySearch : AppCompatActivity() {
 
     private fun setAdapter() {
         recyclerView.adapter = adapterTracks
-        recyclerHistory.adapter = adapterTracks
+        recyclerHistory.adapter = historyAdapter
     }
 
 
@@ -119,8 +126,6 @@ class ActivitySearch : AppCompatActivity() {
         linerHistory = findViewById(R.id.liner_history)
         btnClearHistory = findViewById(R.id.btn_clear_history)
         recyclerHistory = findViewById(R.id.historyRecyclerView)
-       // adapterTracks = AdapterTracks()
-        //recyclerView.adapter = adapterTracks
     }
 
 
@@ -142,6 +147,7 @@ class ActivitySearch : AppCompatActivity() {
                         } else {
                             setScreenState(SearchScreenState.NothingFound)
                             // вот сюда надо написать
+                            // ахахха, я тут оставлял запись для строки кода выше)))
                         }
                         }
                     response.code() in 400..599 -> {

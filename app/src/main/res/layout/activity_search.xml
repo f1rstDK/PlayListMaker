@@ -38,6 +38,7 @@
                 android:layout_width="369dp"
                 android:imeOptions="actionDone"
                 android:singleLine="true"
+                android:textCursorDrawable="@drawable/cursor_color"
                 android:hint="@string/search" />
 
             <ImageView

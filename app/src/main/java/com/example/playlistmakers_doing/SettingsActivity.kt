@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import com.example.playlistmakers_doing.Constants.THEME_SWITCHER_KEY
 import com.example.playlistmakers_doing.Constants.THEME_SWITCHER_PREFERENCES
@@ -17,12 +18,18 @@ class SettingsActivity : AppCompatActivity() {
         val settingButton_agreement = findViewById<Button>(R.id.agreement_users)
         val settingButton_chatSuppoort = findViewById<Button>(R.id.chat_to_support)
         val settingButton_shareApp = findViewById<Button>(R.id.share_app)
-        val themeSwitcher = findViewById<SwitchMaterial>(R.id.themeSwitcher)
+        val themeSwitcher = findViewById<SwitchMaterial>(R.id.theme_switcher)
 
         val sharedPrefs = getSharedPreferences(THEME_SWITCHER_PREFERENCES, MODE_PRIVATE)
 
         val darkMode = sharedPrefs.getBoolean(THEME_SWITCHER_KEY, false)
 
+        val backToMain = findViewById<ImageButton>(R.id.back_to_main)
+
+        backToMain.setOnClickListener {
+            val mainIntent = Intent(this, MainActivity::class.java)
+            startActivity(mainIntent)
+        }
         themeSwitcher.isChecked = darkMode
 
         themeSwitcher.setOnCheckedChangeListener { switcher, checked ->

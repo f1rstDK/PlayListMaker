@@ -41,7 +41,7 @@
         <com.google.android.material.switchmaterial.SwitchMaterial
             android:fontFamily="@font/ys_display_medium"
             style="@style/ButtonStyleSetting"
-            android:id="@+id/themeSwitcher"
+            android:id="@+id/theme_switcher"
             android:text="@string/theme_switch"/>
         <Button
             style="@style/ButtonStyleSetting"
