@@ -13,6 +13,7 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
+import androidx.core.view.isEmpty
 import androidx.recyclerview.widget.RecyclerView
 import com.example.playlistmakers_doing.Constants.SEARCH_TRACKS_PREFS
 import retrofit2.Call
@@ -29,7 +30,7 @@ class ActivitySearch : AppCompatActivity() {
     lateinit var buttonUpdate: Button
     lateinit var textInputLayout: LinearLayout
     lateinit var btnClearHistory: Button
-    lateinit var linerHistory: LinearLayout
+    lateinit var linerHistory: RelativeLayout
     lateinit var recyclerHistory: RecyclerView
     lateinit var sharedStore: SharedPreferences
 
@@ -42,17 +43,21 @@ class ActivitySearch : AppCompatActivity() {
         setListener()
         setAdapter()
 
+        if(recyclerHistory.isEmpty()) {
+            setAllInvisible()
+        }
+
         val buttonBackToMain = findViewById<ImageView>(R.id.back_to_main)
 
         buttonBackToMain.setOnClickListener {
-            val mainIntent = Intent(this, MainActivity::class.java)
-            startActivity(mainIntent)
+            finish()
         }
 
         btnClearHistory.setOnClickListener {
             sharedStore.clearList()
             val emptyList = mutableListOf<Track>()
             setScreenState(SearchScreenState.History(emptyList))
+            setAllInvisible()
         }
 
         ///

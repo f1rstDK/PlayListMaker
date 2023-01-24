@@ -15,10 +15,10 @@ class SettingsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_setting)
 
-        val settingButton_agreement = findViewById<Button>(R.id.agreement_users)
-        val settingButton_chatSuppoort = findViewById<Button>(R.id.chat_to_support)
-        val settingButton_shareApp = findViewById<Button>(R.id.share_app)
-        val themeSwitcher = findViewById<SwitchMaterial>(R.id.theme_switcher)
+        val settingbutton_agreement = findViewById<Button>(R.id.agreement_users)
+        val settingbutton_chatSuppoort = findViewById<Button>(R.id.chat_to_support)
+        val settingbutton_shareApp = findViewById<Button>(R.id.share_app)
+        val theme_switcher = findViewById<SwitchMaterial>(R.id.theme_switcher)
 
         val sharedPrefs = getSharedPreferences(THEME_SWITCHER_PREFERENCES, MODE_PRIVATE)
 
@@ -27,19 +27,18 @@ class SettingsActivity : AppCompatActivity() {
         val backToMain = findViewById<ImageButton>(R.id.back_to_main)
 
         backToMain.setOnClickListener {
-            val mainIntent = Intent(this, MainActivity::class.java)
-            startActivity(mainIntent)
+           finish()
         }
-        themeSwitcher.isChecked = darkMode
+        theme_switcher.isChecked = darkMode
 
-        themeSwitcher.setOnCheckedChangeListener { switcher, checked ->
+        theme_switcher.setOnCheckedChangeListener { switcher, checked ->
             (applicationContext as App).switchTheme(checked)
             sharedPrefs.edit()
                 .putBoolean(THEME_SWITCHER_KEY, checked)
                 .apply()
         }
 
-        settingButton_shareApp.setOnClickListener {
+        settingbutton_shareApp.setOnClickListener {
             val mIntent = Intent(Intent.ACTION_SEND).apply {
                 type = "*/*"
                 putExtra(Intent.EXTRA_TEXT, getString(R.string.link_practicum_developer))
@@ -49,12 +48,12 @@ class SettingsActivity : AppCompatActivity() {
             }
         }
 
-        settingButton_chatSuppoort.setOnClickListener {
+        settingbutton_chatSuppoort.setOnClickListener {
             val chatIntent = Intent(this, ShareActivity::class.java)
             startActivity(chatIntent)
         }
 
-        settingButton_agreement.setOnClickListener {
+        settingbutton_agreement.setOnClickListener {
             val browseAgreement_intent = Intent(Intent.ACTION_VIEW,
             Uri.parse(getString(R.string.oferta)))
             startActivity(browseAgreement_intent)

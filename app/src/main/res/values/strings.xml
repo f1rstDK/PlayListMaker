@@ -28,4 +28,5 @@
     <string name="no_find">Ничего не нашлось</string>
     <string name="search_btn_clear_history">Очистить историю</string>
     <string name="youre_searched">Вы искали</string>
+    <string name="your_history">История поиска</string>
 </resources>
