@@ -29,4 +29,12 @@
     <string name="search_btn_clear_history">Очистить историю</string>
     <string name="youre_searched">Вы искали</string>
     <string name="your_history">История поиска</string>
+    <string name="duration">Длительность</string>
+    <string name="collection_name">Альбом</string>
+    <string name="year">Год</string>
+    <string name="genre">Жанр</string>
+    <string name="country">Страна</string>
+    <string name="playlist_icon">Playlist icon</string>
+    <string name="play">Play track icon</string>
+    <string name="favorite_list_icon">Favorite list icon</string>
 </resources>

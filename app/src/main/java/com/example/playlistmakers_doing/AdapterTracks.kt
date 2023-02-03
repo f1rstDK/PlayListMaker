@@ -1,6 +1,8 @@
 package com.example.playlistmakers_doing
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +11,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.example.playlistmakers_doing.Convert.convertTime
+import com.google.gson.Gson
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -32,6 +36,7 @@ class AdapterTracks : RecyclerView.Adapter<AdapterTracks.ListViewHolder>() {
         return ListViewHolder(view)
     }
 
+    @SuppressLint("SuspiciousIndentation")
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         holder.bind(tracks[position])
         holder.itemView.setOnClickListener {
@@ -60,9 +65,8 @@ class AdapterTracks : RecyclerView.Adapter<AdapterTracks.ListViewHolder>() {
                 .dontAnimate()
                 .into(artworkUrl100)
             val example = view.context.getString(R.string.for_tracks)
-            trackArtistTime.text = String.format(example, convertTime(track.trackTime ?: ""), track.artistName)
+            trackArtistTime.text = String.format(example, convertTime(track.trackTime), track.artistName)
         }
-        private fun convertTime(trackTime: String): String = SimpleDateFormat("mm:ss", Locale.getDefault()).format(trackTime.toLong())
     }
 
 }
