@@ -145,7 +145,7 @@ class ActivitySearch : AppCompatActivity() {
                 when {
                     response.code() == 200 -> {
                         if(response.body()?.resultCount != 0) {
-                            val convert = Convert()
+                            val convert = Convert
                             response.body()
                                 ?.results
                                 ?.map {convert.convert(it)}
@@ -183,7 +183,8 @@ class ActivitySearch : AppCompatActivity() {
                 recyclerView.visibility = View.VISIBLE
                 adapterTracks.setTrackList(state.result)
                 adapterTracks.setTrackListListener {
-                    sharedStore.addToList(it)
+                    track -> sharedStore.addToList(track)
+                    PlayerActivity.getIntent(this,track).apply { startActivity(this) }
                 }
             }
             is SearchScreenState.NetworkProblem -> {
@@ -195,7 +196,11 @@ class ActivitySearch : AppCompatActivity() {
             is SearchScreenState.History -> {
                 linerHistory.visibility = View.VISIBLE
                 historyAdapter.setTrackList(state.list)
-                historyAdapter.setTrackListListener(null)
+                historyAdapter.setTrackListListener { track ->
+                    PlayerActivity.getIntent(this, track).apply {
+                        startActivity(this)
+                    }
+                }
             }
         }
     }

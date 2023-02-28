@@ -16,5 +16,7 @@
     <dimen name="paddingEnd">12dp</dimen>
     <dimen name="padding_for_edit_layout">11px</dimen>
 
+    <dimen name="guide_dp">24dp</dimen>
+
     <dimen name="layout_height">36dp</dimen>
 </resources>
