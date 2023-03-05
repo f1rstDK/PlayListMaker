@@ -26,7 +26,7 @@ class MediaPlayerActivity {
         }
 
     }
-
+ //
     fun getCurrentPosition(): Int {
         return when (playState) {
             PlayerState.PLAYING -> mediaPlayer.currentPosition
