@@ -6,6 +6,8 @@ import android.content.Intent
 import retrofit2.Callback
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -15,6 +17,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.core.view.isEmpty
 import androidx.recyclerview.widget.RecyclerView
+import com.example.playlistmakers_doing.ActivitySearch.Companion.CLICK_DEBOUNCE_DELAY
 import com.example.playlistmakers_doing.Constants.SEARCH_TRACKS_PREFS
 import retrofit2.Call
 import retrofit2.Response
@@ -33,6 +36,7 @@ class ActivitySearch : AppCompatActivity() {
     lateinit var linerHistory: RelativeLayout
     lateinit var recyclerHistory: RecyclerView
     lateinit var sharedStore: SharedPreferences
+    lateinit var progressBarLiner: RelativeLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -88,6 +92,7 @@ class ActivitySearch : AppCompatActivity() {
 
             override fun onTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 clearButton.visibility = View.VISIBLE
+                searchDebounce()
             }
 
             override fun afterTextChanged(p0: Editable?) {
@@ -123,6 +128,7 @@ class ActivitySearch : AppCompatActivity() {
     }
 
     private fun setView() {
+        progressBarLiner = findViewById(R.id.progressBarLiner)
         recyclerView =  findViewById(R.id.RecyclerForTracks)
         inputText = findViewById(R.id.search_input_text)
         networkError = findViewById(R.id.networkTrouble)
@@ -132,42 +138,57 @@ class ActivitySearch : AppCompatActivity() {
         linerHistory = findViewById(R.id.liner_history)
         btnClearHistory = findViewById(R.id.btn_clear_history)
         recyclerHistory = findViewById(R.id.historyRecyclerView)
+
     }
 
+    private fun visibleProgressBar(input: Boolean) {
+        if(input) {
+            progressBarLiner.visibility = View.GONE
+        } else {
+            progressBarLiner.visibility = View.VISIBLE
+        }
+    }
 
     private fun sendRequest() {
-        ApiMain.apiaService.search(inputText.text.toString())
-            .enqueue(object : Callback<ApiResponseApp> {
-                override fun onResponse(
-                    call: Call<ApiResponseApp>,
-                    response: Response<ApiResponseApp>
-            ) {
-                when {
-                    response.code() == 200 -> {
-                        if(response.body()?.resultCount != 0) {
-                            val convert = Convert
-                            response.body()
-                                ?.results
-                                ?.map {convert.convert(it)}
-                                ?.apply {  setScreenState(SearchScreenState.Result(this)) }
-                        } else {
-                            setScreenState(SearchScreenState.NothingFound)
-                            // вот сюда надо написать
-                            // ахахха, я тут оставлял запись для строки кода выше)))
+        if(inputText.text.isNotEmpty()) {
+            visibleProgressBar(false)
+            setAllInvisible()
+            ApiMain.apiaService.search(inputText.text.toString())
+                .enqueue(object : Callback<ApiResponseApp> {
+                    override fun onResponse(
+                        call: Call<ApiResponseApp>,
+                        response: Response<ApiResponseApp>
+                    ) {
+                        when {
+                            response.code() == 200 -> {
+                                visibleProgressBar(true)
+                                if (response.body()?.resultCount != 0) {
+                                    val convert = Convert
+                                    response.body()
+                                        ?.results
+                                        ?.map { convert.convert(it) }
+                                        ?.apply { setScreenState(SearchScreenState.Result(this)) }
+                                } else {
+                                    setScreenState(SearchScreenState.NothingFound)
+                                    // вот сюда надо написать
+                                    // ахахха, я тут оставлял запись для строки кода выше)))
+                                }
+                            }
+                            response.code() in 400..599 -> {
+                                visibleProgressBar(true)
+                                setScreenState(SearchScreenState.NetworkProblem)
+                            }
                         }
-                        }
-                    response.code() in 400..599 -> {
-                       setScreenState(SearchScreenState.NetworkProblem)
+                        Log.d("TAG", "${response.body()}")
                     }
-                }
-                Log.d("TAG", "${response.body()}")
-            }
 
-                override fun onFailure(call: Call<ApiResponseApp>, t: Throwable) {
-                    setScreenState(SearchScreenState.NetworkProblem)
-                    Log.d("TAG", "${t.stackTrace}")
-                }
-            })
+                    override fun onFailure(call: Call<ApiResponseApp>, t: Throwable) {
+                        visibleProgressBar(true)
+                        setScreenState(SearchScreenState.NetworkProblem)
+                        Log.d("TAG", "${t.stackTrace}")
+                    }
+                })
+        }
     }
 
 
@@ -184,7 +205,9 @@ class ActivitySearch : AppCompatActivity() {
                 adapterTracks.setTrackList(state.result)
                 adapterTracks.setTrackListListener {
                     track -> sharedStore.addToList(track)
-                    PlayerActivity.getIntent(this,track).apply { startActivity(this) }
+                    if(clickDebounce()) {
+                        PlayerActivity.getIntent(this, track).apply { startActivity(this) }
+                    }
                 }
             }
             is SearchScreenState.NetworkProblem -> {
@@ -197,8 +220,10 @@ class ActivitySearch : AppCompatActivity() {
                 linerHistory.visibility = View.VISIBLE
                 historyAdapter.setTrackList(state.list)
                 historyAdapter.setTrackListListener { track ->
-                    PlayerActivity.getIntent(this, track).apply {
-                        startActivity(this)
+                    if (clickDebounce()) {
+                        PlayerActivity.getIntent(this, track).apply {
+                            startActivity(this)
+                        }
                     }
                 }
             }
@@ -226,5 +251,25 @@ class ActivitySearch : AppCompatActivity() {
 
     companion object {
         private const val EDIT_TEXT_KEY = "EDIT_TEXT_KEY"
+        private const val CLICK_DEBOUNCE_DELAY = 1000L
+        private const val SEARCH_DEBOUNCE_DELAY = 2000L
+    }
+
+    private var isClickAllowed = true
+    private val handler = Handler(Looper.getMainLooper())
+    private val searchRunnable = Runnable { sendRequest() }
+
+    private fun searchDebounce() {
+        handler.removeCallbacks(searchRunnable)
+        handler.postDelayed(searchRunnable, SEARCH_DEBOUNCE_DELAY)
+    }
+
+    private fun clickDebounce(): Boolean {
+        val current = isClickAllowed
+        if (isClickAllowed) {
+            isClickAllowed = false
+            handler.postDelayed({ isClickAllowed = true}, CLICK_DEBOUNCE_DELAY)
+        }
+        return current
     }
 }

@@ -6,15 +6,16 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 
 object Convert {
-    fun convert(con: Tracks?) = Track(
-        trackName = con?.trackName,
-        artistName = con?.artistName,
-        trackTime = con?.trackTimeMillis,
-        artworkUrl100 = con?.artworkUrl100,
-        collectionName = con?.collectionName,
-        releaseDate = getYearFromTimestamp(con?.releaseDate),
-        genre = con?.genre,
-        country = con?.country
+    fun convert(con: Tracks) = Track(
+        trackName = con.trackName,
+        artistName = con.artistName,
+        trackTime = con.trackTimeMillis,
+        artworkUrl100 = con.artworkUrl100,
+        collectionName = con.collectionName,
+        releaseDate = getYearFromTimestamp(con.releaseDate),
+        genre = con.genre,
+        country = con.country,
+        previewUrl = con.previewUrl
     )
     fun convertTime(time: Int?): String =
         SimpleDateFormat(TRACK_TIME_PATTERN, Locale.getDefault())

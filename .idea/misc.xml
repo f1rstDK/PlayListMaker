@@ -16,6 +16,7 @@
         <entry key="app/src/main/res/drawable/ic_like_anyway.xml" value="0.1215" />
         <entry key="app/src/main/res/drawable/ic_liked.xml" value="0.1215" />
         <entry key="app/src/main/res/drawable/ic_liked_yeah.xml" value="0.1215" />
+        <entry key="app/src/main/res/drawable/ic_load_progress.xml" value="0.1215" />
         <entry key="app/src/main/res/drawable/ic_make_favorite.xml" value="0.1215" />
         <entry key="app/src/main/res/drawable/ic_make_favorites.xml" value="0.1215" />
         <entry key="app/src/main/res/drawable/ic_maked_favorite.xml" value="0.1215" />
@@ -30,7 +31,7 @@
         <entry key="app/src/main/res/drawable/ic_switch.xml" value="0.1325" />
         <entry key="app/src/main/res/drawable/ic_vector.xml" value="0.147" />
         <entry key="app/src/main/res/drawable/no_find.xml" value="0.1215" />
-        <entry key="app/src/main/res/layout/activity_audio_player.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_audio_player.xml" value="0.30948605007595487" />
         <entry key="app/src/main/res/layout/activity_dialog_acitivity.xml" value="0.23541666666666666" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.23818817138671877" />
         <entry key="app/src/main/res/layout/activity_media_teka.xml" value="0.2798053527980535" />
