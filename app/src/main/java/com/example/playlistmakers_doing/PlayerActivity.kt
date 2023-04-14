@@ -2,7 +2,11 @@ package com.example.playlistmakers_doing
 
 import android.content.Context
 import android.content.Intent
+import android.media.MediaPlayer
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -11,6 +15,10 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.playlistmakers_doing.Constants.PLAYER_SHARED_PREFS
 import com.example.playlistmakers_doing.Convert.convertTime
 import com.example.playlistmakers_doing.Convert.getArtwork
+import java.lang.Math.log
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.properties.Delegates
 
 class PlayerActivity : AppCompatActivity() {
     private val artworkView by lazy { findViewById<ImageView>(R.id.main_picture) }
@@ -21,7 +29,10 @@ class PlayerActivity : AppCompatActivity() {
     private val releaseDateView by lazy { findViewById<TextView>(R.id.year)}
     private val genreView by lazy { findViewById<TextView>(R.id.genre)}
     private val countryView by lazy { findViewById<TextView>(R.id.country) }
-
+    private val playButton by lazy { findViewById<ImageView>(R.id.play_button) }
+    private val handler = Handler(Looper.getMainLooper())
+    private val timerView by lazy { findViewById<TextView>(R.id.time_remained) }
+    private var mediaPlayer = MediaPlayerActivity()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,10 +53,26 @@ class PlayerActivity : AppCompatActivity() {
                 ?: throw RuntimeException("Track can not be null!!!")
         }
         bindTrack(track)
-    }
+        //Проверка на то, чтобы previewUrl не был null и приложение не крашилось
+        if (track.previewUrl != null) mediaPlayer.preparePlayer(track.previewUrl)
+        playButton.setOnClickListener {
+            mediaPlayer.playOrPause()
+        }
+        //Управление состояними медиаплеера
+        mediaPlayer.stateCallback = { playerState ->
+            when (playerState) {
+                PlayerState.DEFAULT -> {}
+                PlayerState.PREPARED -> reset()
+                PlayerState.PLAYING -> play()
+                PlayerState.PAUSED -> pause()
+            }
+        }
+     }
+
 
     override fun onDestroy() {
         super.onDestroy()
+        mediaPlayer.release()
     }
 
     private fun bindTrack(track: Track) {
@@ -65,6 +92,29 @@ class PlayerActivity : AppCompatActivity() {
             countryView.text = country
         } }
 
+    private val runnableTimer = object : Runnable {
+        override fun run() {
+            timerView.text = SimpleDateFormat("mm:ss", Locale.getDefault())
+                .format(mediaPlayer.getCurrentPosition())
+            log(mediaPlayer.getCurrentPosition().toString())
+            handler.postDelayed(this, 200L)
+        }
+    }
+
+    //Проигрывание песни, смена "Играть" на "Пауза"
+    private fun play() {
+        playButton.setImageResource((R.drawable.ic_pause))
+        handler.post(runnableTimer)
+    }
+    //Пауза. Смена "Пауза" на "Играть"
+    private fun pause() {
+        playButton.setImageResource(R.drawable.ic_play_button)
+        handler.removeCallbacksAndMessages(null)
+    }
+    //Установка "Играть" на кнопку
+    private fun reset() {
+        playButton.setImageResource(R.drawable.ic_play_button)
+    }
 
     companion object {
         private const val EXTRA_TRACK = "EXTRA_TRACK"
@@ -73,5 +123,8 @@ class PlayerActivity : AppCompatActivity() {
             Intent(context, PlayerActivity::class.java).apply {
                 putExtra(EXTRA_TRACK, track)
             }
+        private fun log(s: String) {
+            Log.d("${this::class.qualifiedName}TAG", s)
+        }
     }
 }

@@ -11,4 +11,5 @@ data class Tracks(
     @SerializedName("releaseDate") val releaseDate: String? = null,
     @SerializedName("primaryGenreName") val genre: String? = null,
     @SerializedName("country") val country: String? = null,
+    @SerializedName("previewUrl") val previewUrl: String?,
 )
