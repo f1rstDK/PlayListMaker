@@ -1,11 +1,9 @@
-package com.example.playlistmakers_doing
+package com.example.playlistmakers_doing.presentation
 
 import android.app.Application
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import com.example.playlistmakers_doing.Constants
-import com.example.playlistmakers_doing.Constants.THEME_SWITCHER_KEY
-import com.example.playlistmakers_doing.Constants.THEME_SWITCHER_PREFERENCES
+import com.example.playlistmakers_doing.presentation.other.Constants.THEME_SWITCHER_KEY
+import com.example.playlistmakers_doing.presentation.other.Constants.THEME_SWITCHER_PREFERENCES
 
 class App : Application() {
     var darkTheme = false

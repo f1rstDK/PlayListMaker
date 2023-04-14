@@ -1,8 +1,7 @@
-package com.example.playlistmakers_doing
+package com.example.playlistmakers_doing.presentation.ui
 
 
 import android.content.Context
-import android.content.Intent
 import retrofit2.Callback
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -17,8 +16,15 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.core.view.isEmpty
 import androidx.recyclerview.widget.RecyclerView
-import com.example.playlistmakers_doing.ActivitySearch.Companion.CLICK_DEBOUNCE_DELAY
-import com.example.playlistmakers_doing.Constants.SEARCH_TRACKS_PREFS
+import com.example.playlistmakers_doing.*
+import com.example.playlistmakers_doing.presentation.other.Constants.SEARCH_TRACKS_PREFS
+import com.example.playlistmakers_doing.data.models.ApiMain
+import com.example.playlistmakers_doing.data.models.ApiResponseApp
+import com.example.playlistmakers_doing.data.shared.SharedPreferences
+import com.example.playlistmakers_doing.presentation.domain.Track
+import com.example.playlistmakers_doing.presentation.other.Convert
+import com.example.playlistmakers_doing.presentation.recycler.AdapterTracks
+import com.example.playlistmakers_doing.presentation.state.SearchScreenState
 import retrofit2.Call
 import retrofit2.Response
 
@@ -166,12 +172,10 @@ class ActivitySearch : AppCompatActivity() {
                                     val convert = Convert
                                     response.body()
                                         ?.results
-                                        ?.map { convert.convert(it) }
+                                        ?.map { Convert.convert(it) }
                                         ?.apply { setScreenState(SearchScreenState.Result(this)) }
                                 } else {
                                     setScreenState(SearchScreenState.NothingFound)
-                                    // вот сюда надо написать
-                                    // ахахха, я тут оставлял запись для строки кода выше)))
                                 }
                             }
                             response.code() in 400..599 -> {

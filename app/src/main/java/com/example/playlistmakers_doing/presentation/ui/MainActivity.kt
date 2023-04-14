@@ -1,9 +1,11 @@
-package com.example.playlistmakers_doing
+package com.example.playlistmakers_doing.presentation.ui
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import com.example.playlistmakers_doing.MediaTeka
+import com.example.playlistmakers_doing.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -13,7 +15,7 @@ class MainActivity : AppCompatActivity() {
         val settings_button = findViewById<Button>(R.id.setting)
 
         settings_button.setOnClickListener {
-            val setting_intent = Intent(this,SettingsActivity::class.java)
+            val setting_intent = Intent(this, SettingsActivity::class.java)
             startActivity(setting_intent)
         }
         val activity_search = findViewById<Button>(R.id.search)

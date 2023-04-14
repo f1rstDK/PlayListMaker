@@ -1,6 +1,6 @@
-package com.example.playlistmakers_doing
+package com.example.playlistmakers_doing.presentation.state
 
-import retrofit2.Callback
+import com.example.playlistmakers_doing.presentation.domain.Track
 
 sealed class SearchScreenState {
     class Result(val result: List<Track>): SearchScreenState()

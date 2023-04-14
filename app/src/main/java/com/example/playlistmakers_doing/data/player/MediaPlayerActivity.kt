@@ -1,6 +1,7 @@
-package com.example.playlistmakers_doing
+package com.example.playlistmakers_doing.data.player
 
 import android.media.MediaPlayer
+import com.example.playlistmakers_doing.data.player.PlayerState
 import kotlin.properties.Delegates
 
 class MediaPlayerActivity {
