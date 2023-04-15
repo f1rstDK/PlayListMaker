@@ -7,6 +7,7 @@ import android.widget.Button
 import com.example.playlistmakers_doing.MediaTeka
 import com.example.playlistmakers_doing.R
 
+
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

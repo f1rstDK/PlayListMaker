@@ -2,9 +2,11 @@ package com.example.playlistmakers_doing.presentation.ui
 
 import android.content.Context
 import android.content.Intent
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.provider.MediaStore
 import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
@@ -22,7 +24,7 @@ import com.example.playlistmakers_doing.data.shared.TrackSharedStore
 import java.text.SimpleDateFormat
 import java.util.*
 
-class PlayerActivity : AppCompatActivity() {
+class PlayerActivity: AppCompatActivity() {
     private val artworkView by lazy { findViewById<ImageView>(R.id.main_picture) }
     private val trackView by lazy  {findViewById<TextView>(R.id.trackTitle)}
     private val bandView by lazy {findViewById<TextView>(R.id.artist_name)}
@@ -60,7 +62,7 @@ class PlayerActivity : AppCompatActivity() {
         playButton.setOnClickListener {
             mediaPlayer.playOrPause()
         }
-        //Управление состояними медиаплеера
+        //Управление состояними медиаплеером
         mediaPlayer.stateCallback = { playerState ->
             when (playerState) {
                 PlayerState.DEFAULT -> {}
@@ -70,7 +72,6 @@ class PlayerActivity : AppCompatActivity() {
             }
         }
      }
-
 
     override fun onDestroy() {
         super.onDestroy()
@@ -125,7 +126,7 @@ class PlayerActivity : AppCompatActivity() {
             Intent(context, PlayerActivity::class.java).apply {
                 putExtra(EXTRA_TRACK, track)
             }
-        private fun log(s: String) {
+        fun log(s: String) {
             Log.d("${this::class.qualifiedName}TAG", s)
         }
     }

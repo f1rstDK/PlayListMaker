@@ -7,4 +7,5 @@ sealed class SearchScreenState {
     class History(val list: List<Track>) : SearchScreenState()
     object NothingFound: SearchScreenState()
     object NetworkProblem : SearchScreenState()
+    object Loading: SearchScreenState()
 }

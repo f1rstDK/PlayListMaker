@@ -17,6 +17,7 @@ import android.widget.*
 import androidx.core.view.isEmpty
 import androidx.recyclerview.widget.RecyclerView
 import com.example.playlistmakers_doing.*
+import com.example.playlistmakers_doing.data.Network
 import com.example.playlistmakers_doing.presentation.other.Constants.SEARCH_TRACKS_PREFS
 import com.example.playlistmakers_doing.data.models.ApiMain
 import com.example.playlistmakers_doing.data.models.ApiResponseApp
@@ -144,7 +145,6 @@ class ActivitySearch : AppCompatActivity() {
         linerHistory = findViewById(R.id.liner_history)
         btnClearHistory = findViewById(R.id.btn_clear_history)
         recyclerHistory = findViewById(R.id.historyRecyclerView)
-
     }
 
     private fun visibleProgressBar(input: Boolean) {
@@ -156,45 +156,12 @@ class ActivitySearch : AppCompatActivity() {
     }
 
     private fun sendRequest() {
-        if(inputText.text.isNotEmpty()) {
-            visibleProgressBar(false)
-            setAllInvisible()
-            ApiMain.apiaService.search(inputText.text.toString())
-                .enqueue(object : Callback<ApiResponseApp> {
-                    override fun onResponse(
-                        call: Call<ApiResponseApp>,
-                        response: Response<ApiResponseApp>
-                    ) {
-                        when {
-                            response.code() == 200 -> {
-                                visibleProgressBar(true)
-                                if (response.body()?.resultCount != 0) {
-                                    val convert = Convert
-                                    response.body()
-                                        ?.results
-                                        ?.map { Convert.convert(it) }
-                                        ?.apply { setScreenState(SearchScreenState.Result(this)) }
-                                } else {
-                                    setScreenState(SearchScreenState.NothingFound)
-                                }
-                            }
-                            response.code() in 400..599 -> {
-                                visibleProgressBar(true)
-                                setScreenState(SearchScreenState.NetworkProblem)
-                            }
-                        }
-                        Log.d("TAG", "${response.body()}")
-                    }
+        var request = inputText.text.toString()
+        var network = Network()
+        setScreenState(SearchScreenState.Loading)
+        network.sendRequest(request, this::setScreenState)
 
-                    override fun onFailure(call: Call<ApiResponseApp>, t: Throwable) {
-                        visibleProgressBar(true)
-                        setScreenState(SearchScreenState.NetworkProblem)
-                        Log.d("TAG", "${t.stackTrace}")
-                    }
-                })
-        }
     }
-
 
     private fun hideKeyboard(view: View) {
         val inputMethodManager =
@@ -215,12 +182,14 @@ class ActivitySearch : AppCompatActivity() {
                 }
             }
             is SearchScreenState.NetworkProblem -> {
+                visibleProgressBar(true)
                 networkError.visibility = View.VISIBLE
             }
             is SearchScreenState.NothingFound -> {
                 nothingFound.visibility = View.VISIBLE
             }
             is SearchScreenState.History -> {
+                visibleProgressBar(true)
                 linerHistory.visibility = View.VISIBLE
                 historyAdapter.setTrackList(state.list)
                 historyAdapter.setTrackListListener { track ->
@@ -230,6 +199,10 @@ class ActivitySearch : AppCompatActivity() {
                         }
                     }
                 }
+            }
+            is SearchScreenState.Loading -> {
+                setAllInvisible()
+                visibleProgressBar(false)
             }
         }
     }
