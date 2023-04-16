@@ -1,17 +1,17 @@
-package com.example.playlistmakers_doing.data
+package com.example.playlistmakers_doing.data.network
 
 import com.example.playlistmakers_doing.data.models.ApiMain
 import com.example.playlistmakers_doing.data.models.ApiResponseApp
-import com.example.playlistmakers_doing.presentation.other.Convert
+import com.example.playlistmakers_doing.data.other.Convert
 import com.example.playlistmakers_doing.presentation.state.SearchScreenState
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class Network {
-    fun sendRequest(
+class NetworkClient: INetworkClient {
+    override fun sendRequest(
         inputText: String,
-        resultCallback: ((SearchScreenState) -> Unit)
+        resultCallback: (SearchScreenState) -> Unit
     ) {
         val callback = object : Callback<ApiResponseApp> {
             override fun onResponse(
@@ -19,14 +19,13 @@ class Network {
                 response: Response<ApiResponseApp>
             ) {
                 when (response.code()) {
-                    in 100..199 -> TODO()
+                    in 100..199 -> Unit // Unit
                     in 200..299 -> responseSuccess(response)
-                    in 300..399 -> TODO()
+                    in 300..399 -> Unit // Unit
                     in 400..499 -> responseFailure()
                     in 500..599 -> responseFailure()
                 }
             }
-
             private fun responseSuccess(response: Response<ApiResponseApp>) {
                 if (response.body()?.resultCount == 0) {
                     emptyResult()
@@ -56,3 +55,4 @@ class Network {
         ApiMain.apiaService.search(inputText).enqueue(callback)
     }
 }
+

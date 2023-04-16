@@ -10,8 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.playlistmakers_doing.R
-import com.example.playlistmakers_doing.presentation.domain.Track
-import com.example.playlistmakers_doing.presentation.other.Convert.convertTime
+import com.example.playlistmakers_doing.domain.Track
+import com.example.playlistmakers_doing.data.other.Convert.convertTime
 
 class AdapterTracks : RecyclerView.Adapter<AdapterTracks.ListViewHolder>() {
 

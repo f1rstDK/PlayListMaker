@@ -1,15 +1,8 @@
-package com.example.playlistmakers_doing.data.player
+package com.example.playlistmakers_doing.presentation.ui
 
 import android.media.MediaPlayer
-import android.os.Handler
-import android.os.Looper
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.example.playlistmakers_doing.R
 import com.example.playlistmakers_doing.data.player.PlayerState
-import com.example.playlistmakers_doing.presentation.ui.PlayerActivity
-import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.properties.Delegates
 

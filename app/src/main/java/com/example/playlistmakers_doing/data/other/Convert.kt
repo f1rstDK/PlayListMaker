@@ -1,6 +1,6 @@
-package com.example.playlistmakers_doing.presentation.other
+package com.example.playlistmakers_doing.data.other
 
-import com.example.playlistmakers_doing.presentation.domain.Track
+import com.example.playlistmakers_doing.domain.Track
 import com.example.playlistmakers_doing.data.models.Tracks
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
