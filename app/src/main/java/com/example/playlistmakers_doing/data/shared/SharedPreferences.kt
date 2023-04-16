@@ -1,12 +1,14 @@
-package com.example.playlistmakers_doing
+package com.example.playlistmakers_doing.data.shared
 
 import android.content.SharedPreferences
-import com.example.playlistmakers_doing.Constants.COUNT_OF_TRACKS
-import com.example.playlistmakers_doing.Constants.TRACKS_HISTORY_KEY
+import com.example.playlistmakers_doing.presentation.other.Constants.COUNT_OF_TRACKS
+import com.example.playlistmakers_doing.presentation.other.Constants.TRACKS_HISTORY_KEY
+import com.example.playlistmakers_doing.domain.Track
 import com.google.gson.Gson
 
 class SharedPreferences(
-    private val sharedPref: SharedPreferences
+    private val sharedPref: SharedPreferences,
+    private val gson: Gson
 ) {
     private var listOfTrack = mutableListOf<Track>()
 
@@ -16,7 +18,7 @@ class SharedPreferences(
         }
         listOfTrack.add(track)
         cropList()
-        val json = Gson().toJson(listOfTrack)
+        val json = gson.toJson(listOfTrack)
         sharedPref.edit()
             .putString(TRACKS_HISTORY_KEY, json)
             .apply()
@@ -24,7 +26,7 @@ class SharedPreferences(
 
     fun getTracks(): List<Track>?{
         val json = sharedPref.getString(TRACKS_HISTORY_KEY, null) ?: return null
-        listOfTrack = Gson().fromJson(json, Array<Track>::class.java).toMutableList()
+        listOfTrack = gson.fromJson(json, Array<Track>::class.java).toMutableList()
         return listOfTrack.reversed()
     }
 

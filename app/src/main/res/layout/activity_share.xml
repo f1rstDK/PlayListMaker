@@ -7,7 +7,7 @@
     android:id="@+id/container"
     android:layout_height="match_parent"
     android:background="?attr/colorSecondary"
-    tools:context=".ShareActivity">
+    tools:context=".presentation.ui.ShareActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

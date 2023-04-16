@@ -1,28 +1,29 @@
-package com.example.playlistmakers_doing
+package com.example.playlistmakers_doing.presentation.ui
 
 
 import android.content.Context
-import android.content.Intent
-import retrofit2.Callback
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.core.view.isEmpty
 import androidx.recyclerview.widget.RecyclerView
-import com.example.playlistmakers_doing.ActivitySearch.Companion.CLICK_DEBOUNCE_DELAY
-import com.example.playlistmakers_doing.Constants.SEARCH_TRACKS_PREFS
-import retrofit2.Call
-import retrofit2.Response
+import com.example.playlistmakers_doing.*
+import com.example.playlistmakers_doing.data.other.ObservableInt
+import com.example.playlistmakers_doing.data.shared.SharedPreferences
+import com.example.playlistmakers_doing.domain.Track
+import com.example.playlistmakers_doing.presentation.App
+import com.example.playlistmakers_doing.presentation.presenter.SearchPresenter
+import com.example.playlistmakers_doing.presentation.recycler.AdapterTracks
+import com.example.playlistmakers_doing.presentation.state.SearchScreenState
 
-class ActivitySearch : AppCompatActivity() {
+class ActivitySearch : AppCompatActivity(), ObservableInt {
 
     lateinit var inputText: EditText
     lateinit var recyclerView: RecyclerView
@@ -37,6 +38,7 @@ class ActivitySearch : AppCompatActivity() {
     lateinit var recyclerHistory: RecyclerView
     lateinit var sharedStore: SharedPreferences
     lateinit var progressBarLiner: RelativeLayout
+    lateinit var searchPresenter: SearchPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,7 +78,7 @@ class ActivitySearch : AppCompatActivity() {
 
         inputText.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
-                val list = sharedStore.getTracks()
+                val list = searchPresenter.getListFromSharedPrefs()
                 list?.let {
                     setScreenState(SearchScreenState.History(it))
                 }
@@ -121,8 +123,8 @@ class ActivitySearch : AppCompatActivity() {
 
 
     private fun initObject() {
-        val sharedPref = getSharedPreferences(SEARCH_TRACKS_PREFS, MODE_PRIVATE)
-        sharedStore = SharedPreferences(sharedPref)
+        val component = App.instance.component
+        searchPresenter = component.provideSearchPresenter(this)
         adapterTracks = AdapterTracks()
         historyAdapter = AdapterTracks()
     }
@@ -138,7 +140,6 @@ class ActivitySearch : AppCompatActivity() {
         linerHistory = findViewById(R.id.liner_history)
         btnClearHistory = findViewById(R.id.btn_clear_history)
         recyclerHistory = findViewById(R.id.historyRecyclerView)
-
     }
 
     private fun visibleProgressBar(input: Boolean) {
@@ -150,54 +151,18 @@ class ActivitySearch : AppCompatActivity() {
     }
 
     private fun sendRequest() {
-        if(inputText.text.isNotEmpty()) {
-            visibleProgressBar(false)
-            setAllInvisible()
-            ApiMain.apiaService.search(inputText.text.toString())
-                .enqueue(object : Callback<ApiResponseApp> {
-                    override fun onResponse(
-                        call: Call<ApiResponseApp>,
-                        response: Response<ApiResponseApp>
-                    ) {
-                        when {
-                            response.code() == 200 -> {
-                                visibleProgressBar(true)
-                                if (response.body()?.resultCount != 0) {
-                                    val convert = Convert
-                                    response.body()
-                                        ?.results
-                                        ?.map { convert.convert(it) }
-                                        ?.apply { setScreenState(SearchScreenState.Result(this)) }
-                                } else {
-                                    setScreenState(SearchScreenState.NothingFound)
-                                    // вот сюда надо написать
-                                    // ахахха, я тут оставлял запись для строки кода выше)))
-                                }
-                            }
-                            response.code() in 400..599 -> {
-                                visibleProgressBar(true)
-                                setScreenState(SearchScreenState.NetworkProblem)
-                            }
-                        }
-                        Log.d("TAG", "${response.body()}")
-                    }
-
-                    override fun onFailure(call: Call<ApiResponseApp>, t: Throwable) {
-                        visibleProgressBar(true)
-                        setScreenState(SearchScreenState.NetworkProblem)
-                        Log.d("TAG", "${t.stackTrace}")
-                    }
-                })
-        }
+        var request = inputText.text.toString()
+        setScreenState(SearchScreenState.Loading)
+        searchPresenter.sendRequest(request)
+        //network.sendRequest(request, this::setScreenState)
     }
-
 
     private fun hideKeyboard(view: View) {
         val inputMethodManager =
             getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
         inputMethodManager?.hideSoftInputFromWindow(view.windowToken, 0)
     }
-    private fun setScreenState(state: SearchScreenState) {
+    fun setScreenState(state: SearchScreenState) {
         setAllInvisible()
         when(state) {
             is SearchScreenState.Result -> {
@@ -211,12 +176,14 @@ class ActivitySearch : AppCompatActivity() {
                 }
             }
             is SearchScreenState.NetworkProblem -> {
+                visibleProgressBar(true)
                 networkError.visibility = View.VISIBLE
             }
             is SearchScreenState.NothingFound -> {
                 nothingFound.visibility = View.VISIBLE
             }
             is SearchScreenState.History -> {
+                visibleProgressBar(true)
                 linerHistory.visibility = View.VISIBLE
                 historyAdapter.setTrackList(state.list)
                 historyAdapter.setTrackListListener { track ->
@@ -227,7 +194,16 @@ class ActivitySearch : AppCompatActivity() {
                     }
                 }
             }
+            is SearchScreenState.Loading -> {
+                setAllInvisible()
+                visibleProgressBar(false)
+            }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        searchPresenter.onViewDestroy()
     }
 
     private fun setAllInvisible() {
@@ -271,5 +247,10 @@ class ActivitySearch : AppCompatActivity() {
             handler.postDelayed({ isClickAllowed = true}, CLICK_DEBOUNCE_DELAY)
         }
         return current
+    }
+
+    override fun update(data: Any) {
+        val state = data as SearchScreenState
+        setScreenState(state)
     }
 }

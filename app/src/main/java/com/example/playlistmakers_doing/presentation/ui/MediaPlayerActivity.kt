@@ -1,9 +1,12 @@
-package com.example.playlistmakers_doing
+package com.example.playlistmakers_doing.presentation.ui
 
 import android.media.MediaPlayer
+import androidx.appcompat.app.AppCompatActivity
+import com.example.playlistmakers_doing.data.player.PlayerState
+import java.util.*
 import kotlin.properties.Delegates
 
-class MediaPlayerActivity {
+class MediaPlayerActivity: AppCompatActivity() {
     private val mediaPlayer = MediaPlayer()
 
     var stateCallback: ((PlayerState) -> Unit)? = null

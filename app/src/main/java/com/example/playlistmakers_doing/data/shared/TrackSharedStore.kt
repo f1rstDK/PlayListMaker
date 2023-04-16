@@ -1,9 +1,12 @@
-package com.example.playlistmakers_doing
+package com.example.playlistmakers_doing.data.shared
 
 import android.content.SharedPreferences
+import com.example.playlistmakers_doing.presentation.other.Constants
+import com.example.playlistmakers_doing.domain.Track
 import com.google.gson.Gson
 
-class TrackSharedStore(private val sharedPreferences: SharedPreferences) {
+class TrackSharedStore(private val sharedPreferences: SharedPreferences,
+                       private val gson: Gson) {
     fun saveToSharedPrefs(track: Track) {
         sharedPreferences
             .edit()
@@ -13,7 +16,7 @@ class TrackSharedStore(private val sharedPreferences: SharedPreferences) {
 
     fun loadFromSharedPrefs(): Track? {
         val trackJson = sharedPreferences.getString(Constants.TRACK_DATA, "") ?: ""
-        return Gson().fromJson(trackJson, Track::class.java)
+        return gson.fromJson(trackJson, Track::class.java)
     }
 
 }

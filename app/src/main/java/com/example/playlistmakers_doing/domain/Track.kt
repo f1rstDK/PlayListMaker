@@ -1,4 +1,4 @@
-package com.example.playlistmakers_doing
+package com.example.playlistmakers_doing.domain
 
 import java.io.Serializable
 

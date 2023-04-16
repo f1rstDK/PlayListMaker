@@ -1,10 +1,6 @@
-package com.example.playlistmakers_doing
+package com.example.playlistmakers_doing.presentation.recycler
 
 import android.annotation.SuppressLint
-import android.content.Context
-import android.content.Intent
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,10 +9,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.example.playlistmakers_doing.Convert.convertTime
-import com.google.gson.Gson
-import java.text.SimpleDateFormat
-import java.util.*
+import com.example.playlistmakers_doing.R
+import com.example.playlistmakers_doing.domain.Track
+import com.example.playlistmakers_doing.data.other.Convert.convertTime
 
 class AdapterTracks : RecyclerView.Adapter<AdapterTracks.ListViewHolder>() {
 

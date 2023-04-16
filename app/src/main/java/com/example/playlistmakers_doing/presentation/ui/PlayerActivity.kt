@@ -1,8 +1,8 @@
-package com.example.playlistmakers_doing
+package com.example.playlistmakers_doing.presentation.ui
 
 import android.content.Context
 import android.content.Intent
-import android.media.MediaPlayer
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -12,15 +12,19 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.example.playlistmakers_doing.Constants.PLAYER_SHARED_PREFS
-import com.example.playlistmakers_doing.Convert.convertTime
-import com.example.playlistmakers_doing.Convert.getArtwork
-import java.lang.Math.log
+import com.example.playlistmakers_doing.presentation.other.Constants.PLAYER_SHARED_PREFS
+import com.example.playlistmakers_doing.data.other.Convert.convertTime
+import com.example.playlistmakers_doing.data.other.Convert.getArtwork
+import com.example.playlistmakers_doing.R
+import com.example.playlistmakers_doing.data.player.PlayerState
+import com.example.playlistmakers_doing.domain.Track
+import com.example.playlistmakers_doing.data.shared.TrackSharedStore
+import com.example.playlistmakers_doing.presentation.App
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.properties.Delegates
 
-class PlayerActivity : AppCompatActivity() {
+class PlayerActivity: AppCompatActivity() {
+
     private val artworkView by lazy { findViewById<ImageView>(R.id.main_picture) }
     private val trackView by lazy  {findViewById<TextView>(R.id.trackTitle)}
     private val bandView by lazy {findViewById<TextView>(R.id.artist_name)}
@@ -42,23 +46,15 @@ class PlayerActivity : AppCompatActivity() {
         backToMain.setOnClickListener {
             finish()
         }
-        val trackSharedStore =
-            TrackSharedStore(getSharedPreferences(PLAYER_SHARED_PREFS, MODE_PRIVATE))
-        val track = if (intent.extras != null) {
-            (intent.extras!!.getSerializable(EXTRA_TRACK) as Track).apply {
-                trackSharedStore.saveToSharedPrefs(this)
-            }
-        } else {
-            trackSharedStore.loadFromSharedPrefs()
-                ?: throw RuntimeException("Track can not be null!!!")
-        }
+        val trackSharedStore = App.instance.singleTrackSharedStore
+        val track = getTrack(trackSharedStore)
         bindTrack(track)
         //Проверка на то, чтобы previewUrl не был null и приложение не крашилось
         if (track.previewUrl != null) mediaPlayer.preparePlayer(track.previewUrl)
         playButton.setOnClickListener {
             mediaPlayer.playOrPause()
         }
-        //Управление состояними медиаплеера
+        //Управление состояними медиаплеером
         mediaPlayer.stateCallback = { playerState ->
             when (playerState) {
                 PlayerState.DEFAULT -> {}
@@ -68,7 +64,22 @@ class PlayerActivity : AppCompatActivity() {
             }
         }
      }
-
+    private fun getTrack(singleTrackSharedStore: TrackSharedStore) =
+        if (intent.extras != null) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                intent.extras!!.getSerializable(EXTRA_TRACK, Track::class.java)?.apply {
+                    singleTrackSharedStore.saveToSharedPrefs(this)
+                }
+            } else {
+                (intent.extras!!.getSerializable(EXTRA_TRACK) as Track).apply {
+                    singleTrackSharedStore.saveToSharedPrefs(this)
+                }
+            }
+                ?: throw NullPointerException("Extra serializable in PlayerActivity can not be null!")
+        } else {
+            singleTrackSharedStore.loadFromSharedPrefs()
+                ?: throw NullPointerException("Extra serializable in PlayerActivity can not be null!")
+        }
 
     override fun onDestroy() {
         super.onDestroy()
@@ -123,7 +134,7 @@ class PlayerActivity : AppCompatActivity() {
             Intent(context, PlayerActivity::class.java).apply {
                 putExtra(EXTRA_TRACK, track)
             }
-        private fun log(s: String) {
+        fun log(s: String) {
             Log.d("${this::class.qualifiedName}TAG", s)
         }
     }
