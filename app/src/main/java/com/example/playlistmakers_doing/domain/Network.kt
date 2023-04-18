@@ -1,15 +1,15 @@
-package com.example.playlistmakers_doing.data
+package com.example.playlistmakers_doing.domain
 
+import com.example.playlistmakers_doing.data.INetwork
 import com.example.playlistmakers_doing.data.models.ApiMain
 import com.example.playlistmakers_doing.data.models.ApiResponseApp
-import com.example.playlistmakers_doing.presentation.other.Convert
 import com.example.playlistmakers_doing.presentation.state.SearchScreenState
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class Network {
-    fun sendRequest(
+class Network : INetwork {
+    override fun sendRequest(
         inputText: String,
         resultCallback: ((SearchScreenState) -> Unit)
     ) {
@@ -19,9 +19,9 @@ class Network {
                 response: Response<ApiResponseApp>
             ) {
                 when (response.code()) {
-                    in 100..199 -> TODO()
+                    in 100..199 -> Unit
                     in 200..299 -> responseSuccess(response)
-                    in 300..399 -> TODO()
+                    in 300..399 -> Unit
                     in 400..499 -> responseFailure()
                     in 500..599 -> responseFailure()
                 }

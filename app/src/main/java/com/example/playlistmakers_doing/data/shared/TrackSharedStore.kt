@@ -2,7 +2,7 @@ package com.example.playlistmakers_doing.data.shared
 
 import android.content.SharedPreferences
 import com.example.playlistmakers_doing.presentation.other.Constants
-import com.example.playlistmakers_doing.presentation.domain.Track
+import com.example.playlistmakers_doing.domain.Track
 import com.google.gson.Gson
 
 class TrackSharedStore(private val sharedPreferences: SharedPreferences) {
