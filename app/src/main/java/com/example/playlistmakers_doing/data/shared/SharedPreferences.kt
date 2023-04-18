@@ -1,8 +1,9 @@
-package com.example.playlistmakers_doing
+package com.example.playlistmakers_doing.data.shared
 
 import android.content.SharedPreferences
-import com.example.playlistmakers_doing.Constants.COUNT_OF_TRACKS
-import com.example.playlistmakers_doing.Constants.TRACKS_HISTORY_KEY
+import com.example.playlistmakers_doing.presentation.other.Constants.COUNT_OF_TRACKS
+import com.example.playlistmakers_doing.presentation.other.Constants.TRACKS_HISTORY_KEY
+import com.example.playlistmakers_doing.domain.Track
 import com.google.gson.Gson
 
 class SharedPreferences(

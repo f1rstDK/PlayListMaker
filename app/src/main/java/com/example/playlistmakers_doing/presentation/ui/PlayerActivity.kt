@@ -1,8 +1,7 @@
-package com.example.playlistmakers_doing
+package com.example.playlistmakers_doing.presentation.ui
 
 import android.content.Context
 import android.content.Intent
-import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -12,15 +11,17 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.example.playlistmakers_doing.Constants.PLAYER_SHARED_PREFS
-import com.example.playlistmakers_doing.Convert.convertTime
-import com.example.playlistmakers_doing.Convert.getArtwork
-import java.lang.Math.log
+import com.example.playlistmakers_doing.presentation.other.Constants.PLAYER_SHARED_PREFS
+import com.example.playlistmakers_doing.domain.Convert.convertTime
+import com.example.playlistmakers_doing.domain.Convert.getArtwork
+import com.example.playlistmakers_doing.R
+import com.example.playlistmakers_doing.domain.Track
+import com.example.playlistmakers_doing.data.player.PlayerState
+import com.example.playlistmakers_doing.data.shared.TrackSharedStore
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.properties.Delegates
 
-class PlayerActivity : AppCompatActivity() {
+class PlayerActivity: AppCompatActivity() {
     private val artworkView by lazy { findViewById<ImageView>(R.id.main_picture) }
     private val trackView by lazy  {findViewById<TextView>(R.id.trackTitle)}
     private val bandView by lazy {findViewById<TextView>(R.id.artist_name)}
@@ -58,7 +59,7 @@ class PlayerActivity : AppCompatActivity() {
         playButton.setOnClickListener {
             mediaPlayer.playOrPause()
         }
-        //Управление состояними медиаплеера
+        //Управление состояними медиаплеером
         mediaPlayer.stateCallback = { playerState ->
             when (playerState) {
                 PlayerState.DEFAULT -> {}
@@ -68,7 +69,6 @@ class PlayerActivity : AppCompatActivity() {
             }
         }
      }
-
 
     override fun onDestroy() {
         super.onDestroy()
@@ -123,7 +123,7 @@ class PlayerActivity : AppCompatActivity() {
             Intent(context, PlayerActivity::class.java).apply {
                 putExtra(EXTRA_TRACK, track)
             }
-        private fun log(s: String) {
+        fun log(s: String) {
             Log.d("${this::class.qualifiedName}TAG", s)
         }
     }

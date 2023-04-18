@@ -1,4 +1,4 @@
-package com.example.playlistmakers_doing
+package com.example.playlistmakers_doing.presentation.ui
 
 import android.content.Intent
 import android.net.Uri
@@ -6,8 +6,10 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
-import com.example.playlistmakers_doing.Constants.THEME_SWITCHER_KEY
-import com.example.playlistmakers_doing.Constants.THEME_SWITCHER_PREFERENCES
+import com.example.playlistmakers_doing.presentation.App
+import com.example.playlistmakers_doing.presentation.other.Constants.THEME_SWITCHER_KEY
+import com.example.playlistmakers_doing.presentation.other.Constants.THEME_SWITCHER_PREFERENCES
+import com.example.playlistmakers_doing.R
 import com.google.android.material.switchmaterial.SwitchMaterial
 
 class SettingsActivity : AppCompatActivity() {

@@ -1,5 +1,6 @@
-package com.example.playlistmakers_doing
+package com.example.playlistmakers_doing.domain
 
+import com.example.playlistmakers_doing.data.models.Tracks
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter

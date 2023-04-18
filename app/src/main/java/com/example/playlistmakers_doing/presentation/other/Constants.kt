@@ -1,4 +1,4 @@
-package com.example.playlistmakers_doing
+package com.example.playlistmakers_doing.presentation.other
 
 object Constants {
     const val COUNT_OF_TRACKS = 10
